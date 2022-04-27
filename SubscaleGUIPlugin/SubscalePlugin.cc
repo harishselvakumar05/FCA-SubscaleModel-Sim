@@ -38,7 +38,7 @@ void SubscalePlugin::update(){
 
 GZ_REGISTER_MODEL_PLUGIN(SubscalePlugin)
 
-////////////////////////////////////////////////////////////////////////////////
+
 SubscalePlugin::SubscalePlugin()
 {
   this->cmds.fill(0.0f);
@@ -49,7 +49,6 @@ SubscalePlugin::SubscalePlugin()
 
 }
 
-/////////////////////////////////////////////////
 SubscalePlugin::~SubscalePlugin()
 {
   this->updateConnection.reset();
@@ -57,7 +56,7 @@ SubscalePlugin::~SubscalePlugin()
 }
 
 
-/////////////////////////////////////////////////
+
 bool SubscalePlugin::FindJoint(const std::string &_sdfParam, sdf::ElementPtr _sdf,
     physics::JointPtr &_joint)
 {
@@ -80,16 +79,12 @@ bool SubscalePlugin::FindJoint(const std::string &_sdfParam, sdf::ElementPtr _sd
   return true;
 }
 
-/////////////////////////////////////////////////
 void SubscalePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
-  GZ_ASSERT(_model, "SubscalePlugin _model pointer is NULL");
-  GZ_ASSERT(_sdf, "SubscalePlugin _sdf pointer is NULL");
   this->model = _model;
   
 
 
-  // Read the required joint name parameters.
   std::vector<std::string> requiredParams = {"left_aileron",
     "right_aileron", "left_elevator", "right_elevator",  "rudder"};
 
@@ -100,14 +95,12 @@ void SubscalePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   }
 
 
-  // Controller time control.
   this->lastControllerUpdateTime = this->model->GetWorld()->SimTime();
 
-  // Listen to the update event. This event is broadcast every simulation
-  // iteration.
+
   this->updateConnection = event::Events::ConnectWorldUpdateBegin(std::bind(&SubscalePlugin::Update, this, std::placeholders::_1));
 
-  // Initialize transport.
+
  transport::NodePtr node(new gazebo::transport::Node());
   node->Init();
   std::string prefix = "~/" + this->model->GetName() + "/";
@@ -124,7 +117,6 @@ void SubscalePlugin::OnControl(const gazebo::SubscalePtr &msg )
 
 }
 
-/////////////////////////////////////////////////
 void SubscalePlugin::Update(const common::UpdateInfo &/*_info*/)
 {
 
@@ -180,7 +172,7 @@ void SubscalePlugin::Update(const common::UpdateInfo &/*_info*/)
 /////////////////////////////////////////////////
 void SubscalePlugin::PublishState()
 {
-  // Read the current state.
+
 
   float leftAileron = this->joints[kLeftAileron]->Position(0);
   float rightAileron = this->joints[kRightAileron]->Position(0);
