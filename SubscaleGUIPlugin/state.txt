@@ -1,0 +1,4 @@
+left_aileron:0.000
+right_aileron:0.000
+elevators:0.000
+rudder:0.000
