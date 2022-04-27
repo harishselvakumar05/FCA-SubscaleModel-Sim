@@ -1,0 +1,16 @@
+syntax = "proto2";
+package SubscaleGUIPlugin_msgs.msgs;
+
+
+message Subscale
+{
+  optional float left_aileron = 1;
+  optional float right_aileron =2;
+  optional float elevators = 3;
+  optional float rudder = 4;
+  optional float cmd_propeller_speed = 5;
+  optional float cmd_left_aileron = 6;
+  optional float cmd_right_aileron = 7;
+  optional float cmd_elevators = 8;
+  optional float cmd_rudder = 9;
+}
