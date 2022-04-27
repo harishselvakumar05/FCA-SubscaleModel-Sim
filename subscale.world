@@ -1,0 +1,177 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="subscale">
+    <gui>
+       <plugin name="keyboard" filename="libSubscaleGUIPlugin.so"/>
+      <camera name="user_camera">
+        <pose> -100 0 20 0 0 0</pose>
+      </camera>
+    </gui>
+    <include>
+      <uri>model://sun</uri>
+    </include>  
+    
+
+      <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>5000 5000</size>
+            </plane>
+          </geometry>
+           <pose>0 0 -3 0 0 0</pose>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name="runway">
+          <pose>700 0 0.1 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>1829 45</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Runway</name>
+            </script>
+          </material>
+        </visual>
+
+        <visual name="grass">
+          <pose>0 0 -0.1 0 0 0</pose>
+          <cast_shadows>false</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>5000 5000</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grass</name>
+            </script>
+          </material>
+        </visual>
+
+      </link>
+    </model>
+
+
+    <model name="subscale_model">
+      <include>`
+        <uri>model://subscale_model</uri>
+      </include>
+      
+    
+                 <plugin name="control" filename="libSubscalePlugin.so">
+                  <left_aileron>subscale_model::left_aileron_joint</left_aileron>
+                  <right_aileron>subscale_model::right_aileron_joint</right_aileron>
+                  <left_elevator>subscale_model::left_elevator_joint</left_elevator>
+                  <right_elevator>subscale_model::right_elevator_joint</right_elevator>
+                  <rudder>subscale_model::rudder_joint</rudder>    
+                </plugin>
+                
+
+                <plugin name="right_wing" filename="libLiftDragPlugin.so">
+
+                  <cp>-18 -27 16</cp>
+                  <link_name>subscale_model::left_wing</link_name>
+                            
+                  <a0>-0.10472</a0>
+                  <cla>4.584</cla>
+                  <cda>0.229</cda>
+                  <cma>1.146</cma>
+                  <alpha_stall>0.209</alpha_stall>
+                  <cla_stall>-3.85</cla_stall>
+                  <cda_stall>0.802</cda_stall>
+                  <cma_stall>0</cma_stall>                
+                  <area>29</area>
+                  <air_density>1.2041</air_density>
+                  <forward>0 1 0</forward>
+                  <upward>0 0 1</upward>
+                
+                  <control_joint_name>subscale_model::left_aileron_joint</control_joint_name>
+                  <control_joint_rad_to_cl>-2.0</control_joint_rad_to_cl>
+                  
+                </plugin>
+             
+                <plugin name="left_wing" filename="libLiftDragPlugin.so">
+                  <cp>-18 27 16</cp>
+                  <link_name>subscale_model::right_wing</link_name>                           
+                  <a0>-0.10472</a0>
+                  <cla>4.584</cla>
+                  <cda>0.229</cda>
+                  <cma>1.146</cma>
+                  <alpha_stall>0.209</alpha_stall>
+                  <cla_stall>-3.85</cla_stall>
+                  <cda_stall>0.802</cda_stall>
+                  <cma_stall>0</cma_stall>
+                 
+                  <area>29</area>
+                  <air_density>1.2041</air_density>
+                  <forward>0 1 0</forward>
+                  <upward>0 0 1</upward>  
+                  <control_joint_name>subscale_model::right_aileron_joint</control_joint_name>
+                  <control_joint_rad_to_cl>-2.0</control_joint_rad_to_cl>      
+                </plugin>
+                
+
+                 <plugin name="relevator" filename="libLiftDragPlugin.so">
+
+                 <cp>-64 0 8.509</cp> 
+
+                  <link_name>subscale_model::stabilizers</link_name>
+                  <a0>0</a0>
+                  <cla>2</cla>
+                  <cda>0.3</cda>
+                  <cma>0</cma>
+                  <alpha_stall>0.15</alpha_stall>
+                  <cla_stall>-1.5</cla_stall>
+                  <cda_stall>0.6</cda_stall>
+                  <cma_stall>0</cma_stall>
+            
+                  <area>2</area>
+                  <air_density>1.2041</air_density>
+                  <forward>0 1 0</forward>
+                  <upward>0 0 1</upward>
+                                  
+
+                </plugin>
+
+                <plugin name="rudder" filename="libLiftDragPlugin.so">
+                  <a0>0</a0>
+                  <cla>2</cla>
+                  <cda>0.3</cda>
+                  <cma>0</cma>
+                  <alpha_stall>0.15</alpha_stall>
+                  <cla_stall>-1.5</cla_stall>
+                  <cda_stall>0.6</cda_stall>
+                  <cma_stall>0</cma_stall>
+                  <cp>-65.4 0 11.2</cp>
+                  <area>1</area>
+                  <air_density>1.2041</air_density>
+                  <forward>0 1 0</forward>
+                  <upward>0 0 1</upward>
+                  <link_name>subscale_model::stabilizers</link_name>
+
+                </plugin>
+
+
+  
+
+    </model>
+  </world>
+</sdf>
