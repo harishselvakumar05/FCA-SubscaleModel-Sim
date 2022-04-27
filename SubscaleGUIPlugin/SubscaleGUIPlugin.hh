@@ -37,10 +37,6 @@ typedef const boost::shared_ptr<const SubscaleGUIPlugin_msgs::msgs::Subscale> Su
 
     private slots: void OnDecreaseThrust();
 
-    private slots: void OnIncreaseFlaps();
-
-    private slots: void OnDecreaseFlaps();
-
     private slots: void OnIncreaseRoll();
 
     private slots: void OnDecreaseRoll();
@@ -53,11 +49,7 @@ typedef const boost::shared_ptr<const SubscaleGUIPlugin_msgs::msgs::Subscale> Su
 
     private slots: void OnDecreaseRudder();
 
-    private slots: void OnPresetTakeOff();
 
-    private slots: void OnPresetCruise();
-
-    private slots: void OnPresetLanding();
 
     private: sdf::ElementPtr sdf;
 
