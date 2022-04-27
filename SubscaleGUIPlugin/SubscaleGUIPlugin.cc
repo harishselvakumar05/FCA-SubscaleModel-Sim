@@ -107,18 +107,6 @@ SubscaleGUIPlugin::SubscaleGUIPlugin()
   QShortcut *decreaseRudder = new QShortcut(QKeySequence("a"), this);
   QObject::connect(decreaseRudder, SIGNAL(activated()), this,
       SLOT(OnDecreaseRudder()));
-
-  QShortcut *presetTakeOff = new QShortcut(QKeySequence('1'), this);
-  QObject::connect(presetTakeOff, SIGNAL(activated()), this,
-      SLOT(OnPresetTakeOff()));
-
-  QShortcut *presetCruise = new QShortcut(QKeySequence('2'), this);
-  QObject::connect(presetCruise, SIGNAL(activated()), this,
-      SLOT(OnPresetCruise()));
-
-  QShortcut *presetLanding = new QShortcut(QKeySequence('3'), this);
-  QObject::connect(presetLanding, SIGNAL(activated()), this,
-      SLOT(OnPresetLanding()));
 }
 
 
@@ -274,38 +262,5 @@ void SubscaleGUIPlugin::OnDecreaseRudder()
   }
 }
 
-void SubscaleGUIPlugin::OnPresetTakeOff()
-{
-SubscaleGUIPlugin_msgs::msgs::Subscale msg;
-  msg.set_cmd_propeller_speed(0.8);
-  msg.set_cmd_left_aileron(-0.017);
-  msg.set_cmd_right_aileron(0.017);
-  msg.set_cmd_elevators(0.033);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
 
-
-void SubscaleGUIPlugin::OnPresetCruise()
-{
-SubscaleGUIPlugin_msgs::msgs::Subscale msg;
-  msg.set_cmd_propeller_speed(0.6);
-  msg.set_cmd_left_aileron(0);
-  msg.set_cmd_right_aileron(0);
-  msg.set_cmd_elevators(0.12);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
-
-
-void SubscaleGUIPlugin::OnPresetLanding()
-{
-SubscaleGUIPlugin_msgs::msgs::Subscale msg;
-  msg.set_cmd_propeller_speed(0.3);
-  msg.set_cmd_left_aileron(0);
-  msg.set_cmd_right_aileron(0);
-  msg.set_cmd_elevators(0.16);
-  msg.set_cmd_rudder(-0.035);
-  this->controlPub->Publish(msg);
-}
 
